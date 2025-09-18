@@ -1,0 +1,2 @@
+export const supaUrl = "https://gdoiwztrkbpdjctmluje.supabase.co"
+export const supaKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdkb2l3enRya2JwZGpjdG1sdWplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMjEyNzgsImV4cCI6MjA3Mzc5NzI3OH0.s1WIWtzdIOEBzpUkZ5U95cVM-a63n0zz5DFf6B75_WI"
