@@ -14,24 +14,40 @@ export default function SingUp(){
     const [loading, setLoading] = useState(false);
 
 
-    async function handlesingUp(){
+    async function handleSignUp(){
         setLoading(true);    
         //vendo as credencias para a api
+        console.log("Email:", email);
+        console.log("Password:", password); 
+        console.log("Name:", name);
+    
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
+            options: {
+                data: {
+                    name: name,
+                    password: password,
+                    image: 'https://UmaImagemaqui.com.br',
+                }
+        }
         });
 
         //se der erro ira retornar a mesagem e era pararr a função
         if(error){
-            alert(error.message);
+            alert(JSON.stringify(error, null, 2));
+            console.log({ email, password, name, image: 'https://UmaImagemaqui.com.br' })
             setLoading(false);
             return;
         }
+        alert("Cadastro realizado com sucesso!");
 
+        setTimeout(() => {
+            router.replace('/');
+        }, 10000);
         setLoading(false);
         //se der certo o cadastro ele ira para a página inicial que é "/"
-        router.replace('/');
+        
 
     }
     return (
@@ -94,8 +110,14 @@ export default function SingUp(){
                             />
                         </View> 
 
-                        <Pressable style={styles.button} onPress={handlesingUp} >
-                            <Text style={styles.buttonText}>Cadastrar</Text>
+                        <Pressable style={styles.button} onPress={handleSignUp} >
+                            <Text style={styles.buttonText}>
+                                {loading ? (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <Ionicons name="reload" size={20} color={colors.white} style={{ marginRight: 8 }}  />
+                                    </View>
+                                ) : 'Cadastrar'}
+                            </Text>
                         </Pressable>
 
                     </View>
@@ -132,8 +154,7 @@ const styles = StyleSheet.create({
         color: colors.white,
     },
 
-    form: {
-        flex: 1,
+    form: {        
         backgroundColor: colors.white,
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,

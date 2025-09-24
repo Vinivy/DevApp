@@ -1,7 +1,38 @@
-import { Stack } from "expo-router/stack";
-import React from "react";
+import { Stack,  } from "expo-router/stack";
+import React, {  useEffect } from "react";
+import { AuthProvider, useAuth } from "../contexts/ContextsAuth";
+import { supabase } from "../lib/supabase";
+import { router } from "expo-router";
 
-export default function MainLayout(){
+export function RootLayout(){
+  return (
+    <AuthProvider>
+      <MainLayout />
+    </AuthProvider>
+  )
+}
+
+/*export default*/ function MainLayout(){
+  //pegando o contexto de autenticação
+  const { setAuth } = useAuth();
+
+  //verificando se o usuario está logado
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((_event, session) => {
+      
+      if(session){
+        setAuth(session.user);
+        router.replace('/(panel)/profile/page');
+        return;
+      }
+
+      setAuth(null);
+      router.replace('/');
+    });
+
+    
+  }, []);
+
   //cadastrando as rotas da navegação
   return (
     <Stack>
