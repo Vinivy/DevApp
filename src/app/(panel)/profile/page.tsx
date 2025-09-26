@@ -5,8 +5,9 @@ import { Alert, Button, StyleSheet, Text, View } from "react-native";
 //router de usuarios logados (panel)
 export default function Profile(){
     const { setAuth } = useAuth ();
+
     async function handleSignOut(){
-        //esse é o metodo de login do supabase
+        //esse é o metodo de login do supabase que desloga o usuario
         const { error } = await supabase.auth.signOut();
         setAuth (null);
         if (error) {
